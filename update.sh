@@ -6,7 +6,7 @@ DEST_PATH="/tmp/config.yaml"
 
 # 你指定的配置文件的原始 GitHub Raw 地址
 # 注意：这里必须是 raw 地址，不能是 blob 地址
-TARGET_URL="https://raw.githubusercontent.com/qq540187000/Mihomo-Clash-Meta-/06a3ec9a844b5605254dea97ee5b36503aa1ed4e/config.yaml"
+TARGET_URL="https://raw.githubusercontent.com/qq540187000/bin7788/blob/2fd950051ead4a95ef0c1994a5887363309ec9c7/config.yaml"
 
 # 使用 ghproxy 代理加速下载 (解决国内无法连接 GitHub 问题)
 PROXY_URL="https://ghproxy.net/"
