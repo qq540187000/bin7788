@@ -1,0 +1,140 @@
+#==========================================
+# @ConfigName        MihomoParty 优化版配置文件
+# @Optimization      针对 DNS 策略、分流逻辑与节点选择进行了修正
+# @UpdateTime        2025-04-12
+#==========================================
+
+# 基础设置
+port: 7890
+socks-port: 7891
+allow-lan: true
+mode: Rule
+log-level: info
+ipv6: false
+external-controller: :9090
+
+# Mihomo/Meta 专属优化
+geodata-mode: true
+geodata-loader: standard
+tcp-concurrent: true
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+# DNS 设置 (优化：国内外分流，防止 DNS 污染)
+dns:
+  enable: true
+  listen: :1053
+  ipv6: false
+  enhanced-mode: fake-ip # 使用 Fake-IP 模式提高响应速度
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localhost"
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
+
+# 嗅探设置 (让分流更精准)
+sniffer:
+  enable: true
+  parse-pure-ip: true
+  sniff:
+    tls: { ports: [443, 8443] }
+    http: { ports: [80, 8080-8880], override-destination: true }
+
+# 代理节点 (保留了原文件中的节点，注意：免费节点可能已失效)
+proxies:
+  - {name: 🇺🇸 美国bug, server: 107.172.216.145, port: 54658, type: vmess, uuid: 45685b58-aa74-4d53-d3d4-0b813574ef75, alterId: 0, cipher: auto, tls: false}
+  - {name: isp, server: xzj2.geniusdeer.top, port: 40841, type: ss, cipher: aes-256-gcm, password: 3lzSt59txArvrHQGukT9l0ppooFmNqwsthT6SdqtF48=}
+  - {name: 🇺🇸 US, server: 142.171.42.144, port: 80, type: vless, uuid: 5230d600-aa94-492f-90c9-42faf8c61f82, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: 2V-dGLrGFI9y5Q4TjOjAI8jpnxbAnzn4U4k1SSI5REs, short-id: "ab00ab" }, servername: tjdownload.pan.wo.cn, client-fingerprint: chrome, network: tcp}
+  - {name: 🇺🇸 美国🇺🇸imznb.dpdns.org, server: www.visa.com.sg, port: 8443, type: vless, uuid: d6d1276b-f799-4019-9d8f-9a942e795409, tls: true, servername: imznb.dpdns.org, client-fingerprint: random, network: ws, ws-opts: {path: "/?ed=2560", headers: {Host: imznb.dpdns.org}}}
+  - {name: 🇰🇷 韩国-VL, server: 129.154.50.93, port: 40123, type: vless, uuid: 3def21f6-5327-449a-890e-305e5fab0976, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: 35wXJnl9bkOzQgd2UDMCvy0wj7OfnaqNc0znQyM_dEU}, servername: www.iij.ad.jp, client-fingerprint: chrome, network: tcp}
+  - {name: 🇺🇸 美国, server: us.568686.xyz, port: 443, type: vless, uuid: e12b0805-f941-4e5e-9889-8faa177fa2d8, tls: true, alpn: ["null"], servername: us.568686.xyz, network: ws, ws-opts: {path: /, headers: {Host: us.568686.xyz}}}
+  - {name: 🇺🇸 美国🇺🇸铁柱免费分享优选, server: 104.25.183.153, port: 443, type: vmess, uuid: 9f761cb6-aae2-4ca1-937b-fb190629e304, alterId: 0, cipher: auto, tls: true, servername: v2-ray.eu.org, network: ws, ws-opts: {path: /, headers: {Host: v2-ray.eu.org}}}
+  - {name: 🇮🇷 伊朗, server: po.radid.top, port: 20087, type: vless, uuid: 3baf2ce8-db1e-456d-a11a-e114e4ba2116, tls: false, network: grpc, grpc-opts: {grpc-mode: gun, grpc-service-name: /}}
+  - {name: 🇩🇪 德国🇩🇪PY_Gen_vmess, server: po.radid.top, port: 20086, type: vmess, uuid: 8a1d5381-a3b6-4a7c-8db5-8f9255cb5081, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /, headers: {Host: po.radid.top}}}
+  - {name: 🇩🇪 德国-yzonde2p, server: po.radid.top, port: 90, type: vless, uuid: 6c5a101b-bf14-4f02-83b4-efbc3241ce47, tls: false, network: ws, ws-opts: {path: /, headers: {Host: po.radid.top}}}
+  - {name: 🇯🇵 日本🇯🇵-vmess, server: 176.97.73.174, port: 53201, type: vmess, uuid: 3191e20e-6ebd-47d7-ad65-a20797e437ee, alterId: 0, cipher: auto, tls: false}
+  - {name: 🇭🇰 香港🇭🇰 vmess_auto, server: 154.36.175.227, port: 30454, type: vmess, uuid: 14fbbb99-c88a-41aa-8dcd-8f18c957fb5b, alterId: 0, cipher: auto, tls: false}
+  - {name: 🇦🇺 澳大利亚🇦🇺vmess_auto, server: 165.101.29.232, port: 12355, type: vmess, uuid: dd8ba20a-3a64-4db3-b32b-fbc33d619489, alterId: 0, cipher: auto, tls: false}
+  - {name: 妖火🔥, server: 172.64.145.149, port: 443, type: vless, uuid: 95d8f2fc-6cb1-48dc-9efb-f9d683cf993c, tls: true, servername: love1025.imznb.dpdns.org, network: ws, ws-opts: {path: "/?fed=2048", headers: {Host: love1025.imznb.dpdns.org}}}
+  - {name: Argo_优选IP_lxc5, server: cf.877774.xyz, port: 443, type: vmess, uuid: baeb364c-819c-46b0-ad56-4bc88e7d280e, alterId: 0, cipher: auto, tls: true, servername: tampa-feeling-opposed-tattoo.trycloudflare.com, network: ws, ws-opts: {path: /VNqm2W, headers: {Host: tampa-feeling-opposed-tattoo.trycloudflare.com}}}
+  - {name: 🇳🇱 荷兰🇳🇱Vless-Eugene, server: 178.130.41.135, port: 11822, type: vless, uuid: 775e7712-26c8-4018-a6d9-3d4da5e4ee58, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: OWzHIi20S95-BoP9SBssILn3d_ygACV7R9Ib_fGNCCc, short-id: "b3f7367f5a" }, servername: yahoo.com, client-fingerprint: chrome, network: tcp}
+
+# 代理组 (优化：修正了图标和分组逻辑)
+proxy-groups:
+  - {name: 手动切换, type: select, include-all: true, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png }
+  - {name: 全球加速, type: select, proxies: [自动选择, 手动切换, 香港节点, 日本节点, 台湾节点, 美国节点, 狮城节点, DIRECT], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png }
+  - {name: 苹果服务, type: select, proxies: [DIRECT, 全球加速, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png }
+  - {name: 哔哩哔哩, type: select, proxies: [DIRECT, 香港节点, 台湾节点], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/bilibili.png }
+  - {name: Emby服务, type: select, proxies: [全球加速, 手动切换, DIRECT], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Emby.png }
+  - {name: OpenAi,   type: select, proxies: [美国节点, 台湾节点, 日本节点, 手动切换], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png }
+  - {name: 国际媒体, type: select, proxies: [全球加速, 手动切换, 香港节点, 日本节点, 台湾节点, 美国节点, 狮城节点], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png }
+  - {name: 谷歌服务, type: select, proxies: [全球加速, 手动切换], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png }
+  - {name: 电报消息, type: select, proxies: [全球加速, 手动切换, 香港节点, 日本节点, 美国节点], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png }
+  - {name: 推特服务, type: select, proxies: [全球加速, 手动切换, 美国节点, 日本节点], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Twitter.png }
+  - {name: 游戏平台, type: select, proxies: [DIRECT, 全球加速, 手动切换], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/GAME.png }
+  - {name: AdBlock,  type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Adblock.png }
+  - {name: 兜底分流, type: select, proxies: [全球加速, 手动切换, DIRECT], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png }
+  
+  # 地区自动测速分组 (间隔优化为 300s)
+  - {name: 自动选择, type: url-test, include-all: true, interval: 300, tolerance: 50,  icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png }
+  - {name: 香港节点, type: url-test, include-all: true, interval: 300, tolerance: 50,  filter: "港|HK|(?i)Hong", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png }             
+  - {name: 日本节点, type: url-test, include-all: true, interval: 300, tolerance: 50,  filter: "日|东京|JP|(?i)Japan", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png }
+  - {name: 台湾节点, type: url-test, include-all: true, interval: 300, tolerance: 50,  filter: "台|湾|TW|(?i)Taiwan", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png }
+  - {name: 美国节点, type: url-test, include-all: true, interval: 300, tolerance: 50,  filter: "美|US|(?i)States|American", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png }
+  - {name: 狮城节点, type: url-test, include-all: true, interval: 300, tolerance: 50,  filter: "新|坡|SG|(?i)Singapore", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png }
+
+# 规则集 (保持原样，链接有效)
+rule-providers:
+  AdBlock:     {behavior: domain,    interval: 86400, format: text, type: http, url: https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules_domainset.txt , path: ./ruleset/anti-ad-clash.txt }
+  OpenAi:      {behavior: classical, interval: 86400, format: yaml, type: http, url: https://gist.githubusercontent.com/ddgksf2013/cb4121e8b5c5d865cc949cb8120320c4/raw/Ai.yaml , path: ./ruleset/OpenAi.yaml }
+  Emby:        {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/ddgksf2013/Filter/master/Emby.yaml , path: ./ruleset/Emby.yaml }
+  BiliBili:    {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml , path: ./ruleset/BiliBili.yaml }
+  Bahamut:     {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml , path: ./ruleset/Bahamut.yaml } 
+  GlobalMedia: {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml , path: ./ruleset/GlobalMedia.yaml }
+  Apple:       {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Classical.yaml , path: ./ruleset/Apple.yaml }
+  Github:      {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml , path: ./ruleset/Github.yaml }
+  Microsoft:   {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml , path: ./ruleset/Microsoft.yaml }
+  Google:      {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml , path: ./ruleset/Google.yaml }
+  Telegram:    {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml , path: ./ruleset/Telegram.yaml }
+  Twitter:     {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.yaml , path: ./ruleset/Twitter.yaml }
+  Game:        {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.yaml , path: ./ruleset/Game.yaml }
+  ProxyLite:   {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ProxyLite/ProxyLite.yaml , path: ./ruleset/ProxyLite.yaml }
+  Direct:      {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.yaml , path: ./ruleset/Direct.yaml }
+  Lan:         {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml , path: ./ruleset/Lan.yaml }
+  Download:    {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml , path: ./ruleset/Download.yaml }
+  ChinaIP:     {behavior: ipcidr,    interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/soffchen/GeoIP2-CN/release/clash-rule-provider.yml , path: ./ruleset/ChinaIP.yaml }
+
+# 分流规则 (优化：修正了映射错误)
+rules:
+  - RULE-SET,AdBlock,AdBlock
+  - RULE-SET,OpenAi,OpenAi
+  - RULE-SET,Emby,Emby服务
+  - RULE-SET,BiliBili,哔哩哔哩
+  - RULE-SET,Bahamut,台湾节点 # 修正：原配置指向哔哩哔哩，会导致巴哈姆特无法观看，现修正为台湾节点
+  - RULE-SET,GlobalMedia,国际媒体
+  - RULE-SET,Apple,苹果服务
+  - RULE-SET,Github,全球加速
+  - RULE-SET,Microsoft,全球加速
+  - RULE-SET,Google,谷歌服务
+  - RULE-SET,Telegram,电报消息
+  - RULE-SET,Twitter,推特服务 # 修正：原配置指向全球加速，现正确指向推特服务组
+  - RULE-SET,Game,游戏平台
+  - RULE-SET,ProxyLite,全球加速
+  - RULE-SET,ChinaIP,DIRECT
+  - RULE-SET,Direct,DIRECT
+  - RULE-SET,Lan,DIRECT
+  - RULE-SET,Download,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,兜底分流
