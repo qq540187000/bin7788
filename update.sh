@@ -6,7 +6,7 @@ DEST_PATH="/tmp/config.yaml"
 
 # 你指定的配置文件的原始 GitHub Raw 地址
 # 注意：这里必须是 raw 地址，不能是 blob 地址
-TARGET_URL="https://raw.githubusercontent.com/qq540187000/bin7788/0ade3b2442a54dadb16915c15c8dbb65e3950b57/config.yaml"
+TARGET_URL="https://raw.githubusercontent.com/qq540187000/bin7788/main/config.yaml"
 
 # 使用 ghproxy 代理加速下载 (解决国内无法连接 GitHub 问题)
 PROXY_URL="https://ghproxy.net/"
