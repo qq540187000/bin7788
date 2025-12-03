@@ -1,6 +1,6 @@
 #==========================================
-# @ConfigName ShellCrash 专用·终极优化版
-# @Optimization 适配 Fake-IP 模式 + 修复分组语法 + 内置用户节点
+# @ConfigName ShellCrash 专用·最终毕业版
+# @Optimization 移除误杀规则 + 适配 Fake-IP + 精确 AI 分流
 # @UpdateTime 2025-12-04
 #==========================================
 
@@ -14,12 +14,12 @@ ipv6: false
 external-controller: :9090
 
 # --- 内核优化 ---
-# 开启 TCP 并发，提升网页加载速度
 tcp-concurrent: true
 find-process-mode: strict
-global-client-fingerprint: chrome
+# 移除全局指纹以增强兼容性，改为在节点单独设置
+# global-client-fingerprint: chrome
 
-# --- 连接复用 (默认关闭以保证游戏和视频稳定) ---
+# --- 连接复用 (默认关闭保稳定) ---
 mux:
   enabled: false
   protocol: smux
@@ -36,7 +36,7 @@ dns:
     - "*.lan"
     - "*.localhost"
     - "stun.*"
-    # 修复 Windows 右下角显示无网络的问题
+    # 修复 Windows 右下角无网络图标
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
   default-nameserver:
@@ -52,6 +52,7 @@ dns:
     geoip: true
     ipcidr:
       - 240.0.0.0/4
+  fallback-auto: true
 
 # --- 嗅探设置 ---
 sniffer:
@@ -68,159 +69,346 @@ sniffer:
 # 1. 代理节点 (已填入你的 17 个节点)
 #=========================================================
 proxies:
-  - {name: 🇺🇸 美国bug, server: 107.172.216.145, port: 54658, type: vmess, uuid: 45685b58-aa74-4d53-d3d4-0b813574ef75, alterId: 0, cipher: auto, tls: false}
-  - {name: isp, server: xzj2.geniusdeer.top, port: 40841, type: ss, cipher: aes-256-gcm, password: 3lzSt59txArvrHQGukT9l0ppooFmNqwsthT6SdqtF48=}
-  - {name: 🇺🇸 US, server: 142.171.42.144, port: 80, type: vless, uuid: 5230d600-aa94-492f-90c9-42faf8c61f82, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: 2V-dGLrGFI9y5Q4TjOjAI8jpnxbAnzn4U4k1SSI5REs, short-id: "ab00ab" }, servername: tjdownload.pan.wo.cn, client-fingerprint: chrome, network: tcp}
-  - {name: 🇺🇸 美国imznb.dpdns.org, server: www.visa.com.sg, port: 8443, type: vless, uuid: d6d1276b-f799-4019-9d8f-9a942e795409, tls: true, servername: imznb.dpdns.org, client-fingerprint: random, network: ws, ws-opts: {path: "/?ed=2560", headers: {Host: imznb.dpdns.org}}}
-  - {name: 🇰🇷 韩国-VL, server: 129.154.50.93, port: 40123, type: vless, uuid: 3def21f6-5327-449a-890e-305e5fab0976, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: 35wXJnl9bkOzQgd2UDMCvy0wj7OfnaqNc0znQyM_dEU}, servername: www.iij.ad.jp, client-fingerprint: chrome, network: tcp}
-  - {name: 🇺🇸 美国, server: us.568686.xyz, port: 443, type: vless, uuid: e12b0805-f941-4e5e-9889-8faa177fa2d8, tls: true, alpn: ["null"], servername: us.568686.xyz, network: ws, ws-opts: {path: /, headers: {Host: us.568686.xyz}}}
-  - {name: 🇺🇸 美国铁柱免费分享优选, server: 104.25.183.153, port: 443, type: vmess, uuid: 9f761cb6-aae2-4ca1-937b-fb190629e304, alterId: 0, cipher: auto, tls: true, servername: v2-ray.eu.org, network: ws, ws-opts: {path: /, headers: {Host: v2-ray.eu.org}}}
-  - {name: 🇮🇷 伊朗, server: po.radid.top, port: 20087, type: vless, uuid: 3baf2ce8-db1e-456d-a11a-e114e4ba2116, tls: false, network: grpc, grpc-opts: {grpc-mode: gun, grpc-service-name: /}}
-  - {name: 🇩🇪 德国PY_Gen_vmess, server: po.radid.top, port: 20086, type: vmess, uuid: 8a1d5381-a3b6-4a7c-8db5-8f9255cb5081, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /, headers: {Host: po.radid.top}}}
-  - {name: 🇩🇪 德国-yzonde2p, server: po.radid.top, port: 90, type: vless, uuid: 6c5a101b-bf14-4f02-83b4-efbc3241ce47, tls: false, network: ws, ws-opts: {path: /, headers: {Host: po.radid.top}}}
-  - {name: 🇯🇵 日本-vmess, server: 176.97.73.174, port: 53201, type: vmess, uuid: 3191e20e-6ebd-47d7-ad65-a20797e437ee, alterId: 0, cipher: auto, tls: false}
-  - {name: 🇭🇰 香港 vmess_auto, server: 154.36.175.227, port: 30454, type: vmess, uuid: 14fbbb99-c88a-41aa-8dcd-8f18c957fb5b, alterId: 0, cipher: auto, tls: false}
-  - {name: 🇦🇺 澳大利亚vmess_auto, server: 165.101.29.232, port: 12355, type: vmess, uuid: dd8ba20a-3a64-4db3-b32b-fbc33d619489, alterId: 0, cipher: auto, tls: false}
-  - {name: 🇺🇸 妖火🔥, server: 172.64.145.149, port: 443, type: vless, uuid: 95d8f2fc-6cb1-48dc-9efb-f9d683cf993c, tls: true, servername: love1025.imznb.dpdns.org, network: ws, ws-opts: {path: "/?fed=2048", headers: {Host: love1025.imznb.dpdns.org}}}
-  - {name: 🇺🇸 Argo_优选IP_lxc5, server: cf.877774.xyz, port: 443, type: vmess, uuid: baeb364c-819c-46b0-ad56-4bc88e7d280e, alterId: 0, cipher: auto, tls: true, servername: tampa-feeling-opposed-tattoo.trycloudflare.com, network: ws, ws-opts: {path: /VNqm2W, headers: {Host: tampa-feeling-opposed-tattoo.trycloudflare.com}}}
-  - {name: 🇺🇸 Argo_优选VISA_lxc4, type: vmess, server: www.visa.com, port: 443, uuid: a38ecc2f-b198-4029-b839-eb96aa93e7e8, cipher: auto, tls: true, servername: , network: ws, alterId: 0, ws-opts: {path: "/PamZ6X", headers: {Host: "outsourcing-sport-joining-memo.trycloudflare.com"}}}
-  - {name: 🇳🇱 荷兰Vless-Eugene, server: 178.130.41.135, port: 11822, type: vless, uuid: 775e7712-26c8-4018-a6d9-3d4da5e4ee58, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: OWzHIi20S95-BoP9SBssILn3d_ygACV7R9Ib_fGNCCc, short-id: "b3f7367f5a" }, servername: yahoo.com, client-fingerprint: chrome, network: tcp}
+  - name: "🇺🇸 美国bug"
+    server: 107.172.216.145
+    port: 54658
+    type: vmess
+    uuid: 45685b58-aa74-4d53-d3d4-0b813574ef75
+    alterId: 0
+    cipher: auto
+    tls: false
+  - name: "isp"
+    server: xzj2.geniusdeer.top
+    port: 40841
+    type: ss
+    cipher: aes-256-gcm
+    password: 3lzSt59txArvrHQGukT9l0ppooFmNqwsthT6SdqtF48=
+  - name: "🇺🇸 US"
+    server: 142.171.42.144
+    port: 80
+    type: vless
+    uuid: 5230d600-aa94-492f-90c9-42faf8c61f82
+    tls: true
+    flow: xtls-rprx-vision
+    reality-opts: {public-key: 2V-dGLrGFI9y5Q4TjOjAI8jpnxbAnzn4U4k1SSI5REs, short-id: "ab00ab"}
+    servername: tjdownload.pan.wo.cn
+    client-fingerprint: chrome
+    network: tcp
+  - name: "🇺🇸 美国imznb.dpdns.org"
+    server: www.visa.com.sg
+    port: 8443
+    type: vless
+    uuid: d6d1276b-f799-4019-9d8f-9a942e795409
+    tls: true
+    servername: imznb.dpdns.org
+    client-fingerprint: random
+    network: ws
+    ws-opts: {path: "/?ed=2560", headers: {Host: imznb.dpdns.org}}
+  - name: "🇰🇷 韩国-VL"
+    server: 129.154.50.93
+    port: 40123
+    type: vless
+    uuid: 3def21f6-5327-449a-890e-305e5fab0976
+    tls: true
+    flow: xtls-rprx-vision
+    reality-opts: {public-key: 35wXJnl9bkOzQgd2UDMCvy0wj7OfnaqNc0znQyM_dEU}
+    servername: www.iij.ad.jp
+    client-fingerprint: chrome
+    network: tcp
+  - name: "🇺🇸 美国"
+    server: us.568686.xyz
+    port: 443
+    type: vless
+    uuid: e12b0805-f941-4e5e-9889-8faa177fa2d8
+    tls: true
+    alpn: ["null"]
+    servername: us.568686.xyz
+    network: ws
+    ws-opts: {path: /, headers: {Host: us.568686.xyz}}
+  - name: "🇺🇸 美国铁柱免费分享优选"
+    server: 104.25.183.153
+    port: 443
+    type: vmess
+    uuid: 9f761cb6-aae2-4ca1-937b-fb190629e304
+    alterId: 0
+    cipher: auto
+    tls: true
+    servername: v2-ray.eu.org
+    network: ws
+    ws-opts: {path: /, headers: {Host: v2-ray.eu.org}}
+  - name: "🇮🇷 伊朗"
+    server: po.radid.top
+    port: 20087
+    type: vless
+    uuid: 3baf2ce8-db1e-456d-a11a-e114e4ba2116
+    tls: false
+    network: grpc
+    grpc-opts: {grpc-mode: gun, grpc-service-name: /}
+  - name: "🇩🇪 德国PY_Gen_vmess"
+    server: po.radid.top
+    port: 20086
+    type: vmess
+    uuid: 8a1d5381-a3b6-4a7c-8db5-8f9255cb5081
+    alterId: 0
+    cipher: auto
+    tls: false
+    network: ws
+    ws-opts: {path: /, headers: {Host: po.radid.top}}
+  - name: "🇩🇪 德国-yzonde2p"
+    server: po.radid.top
+    port: 90
+    type: vless
+    uuid: 6c5a101b-bf14-4f02-83b4-efbc3241ce47
+    tls: false
+    network: ws
+    ws-opts: {path: /, headers: {Host: po.radid.top}}
+  - name: "🇯🇵 日本-vmess"
+    server: 176.97.73.174
+    port: 53201
+    type: vmess
+    uuid: 3191e20e-6ebd-47d7-ad65-a20797e437ee
+    alterId: 0
+    cipher: auto
+    tls: false
+  - name: "🇭🇰 香港 vmess_auto"
+    server: 154.36.175.227
+    port: 30454
+    type: vmess
+    uuid: 14fbbb99-c88a-41aa-8dcd-8f18c957fb5b
+    alterId: 0
+    cipher: auto
+    tls: false
+  - name: "🇦🇺 澳大利亚vmess_auto"
+    server: 165.101.29.232
+    port: 12355
+    type: vmess
+    uuid: dd8ba20a-3a64-4db3-b32b-fbc33d619489
+    alterId: 0
+    cipher: auto
+    tls: false
+  - name: "🇺🇸 妖火🔥"
+    server: 172.64.145.149
+    port: 443
+    type: vless
+    uuid: 95d8f2fc-6cb1-48dc-9efb-f9d683cf993c
+    tls: true
+    servername: love1025.imznb.dpdns.org
+    network: ws
+    ws-opts: {path: "/?fed=2048", headers: {Host: love1025.imznb.dpdns.org}}
+  - name: "🇺🇸 Argo_优选IP_lxc5"
+    server: cf.877774.xyz
+    port: 443
+    type: vmess
+    uuid: baeb364c-819c-46b0-ad56-4bc88e7d280e
+    alterId: 0
+    cipher: auto
+    tls: true
+    servername: tampa-feeling-opposed-tattoo.trycloudflare.com
+    network: ws
+    ws-opts: {path: /VNqm2W, headers: {Host: tampa-feeling-opposed-tattoo.trycloudflare.com}}
+  - name: "🇺🇸 Argo_优选VISA_lxc4"
+    type: vmess
+    server: www.visa.com
+    port: 443
+    uuid: a38ecc2f-b198-4029-b839-eb96aa93e7e8
+    cipher: auto
+    tls: true
+    servername: ""
+    network: ws
+    alterId: 0
+    ws-opts: {path: "/PamZ6X", headers: {Host: "outsourcing-sport-joining-memo.trycloudflare.com"}}
+  - name: "🇳🇱 荷兰Vless-Eugene"
+    server: 178.130.41.135
+    port: 11822
+    type: vless
+    uuid: 775e7712-26c8-4018-a6d9-3d4da5e4ee58
+    tls: true
+    flow: xtls-rprx-vision
+    reality-opts: {public-key: OWzHIi20S95-BoP9SBssILn3d_ygACV7R9Ib_fGNCCc, short-id: "b3f7367f5a"}
+    servername: yahoo.com
+    client-fingerprint: chrome
+    network: tcp
 
 #=========================================================
-# 2. 策略组 (Proxy Groups)
+# 2. 策略组 (Proxy Groups) - 手动指定模式
 #=========================================================
 proxy-groups:
-  # --- 地区自动分组 (使用正则抓取节点) ---
-  - name: 香港节点
+  # --- 地区自动分组 ---
+  - name: "香港节点"
     type: url-test
-    include-all: true
-    filter: "港|HK|(?i)Hong"
+    proxies:
+      - "🇭🇰 香港 vmess_auto"
+      - "全球加速"
+      - "手动切换"
+    url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png
-    
-  - name: 日本节点
+
+  - name: "日本节点"
     type: url-test
-    include-all: true
-    filter: "日|东京|JP|(?i)Japan"
+    proxies:
+      - "🇯🇵 日本-vmess"
+      - "全球加速"
+      - "手动切换"
+    url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png
-    
-  - name: 台湾节点
+
+  - name: "台湾节点"
     type: url-test
-    include-all: true
-    filter: "台|湾|TW|(?i)Taiwan"
+    proxies:
+      - "手动切换"
+      - "全球加速"
+    url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
-    
-  - name: 美国节点
+
+  - name: "美国节点"
     type: url-test
-    include-all: true
-    filter: "美|US|(?i)States|American"
+    proxies:
+      - "🇺🇸 美国"
+      - "🇺🇸 US"
+      - "🇺🇸 美国bug"
+      - "🇺🇸 Argo_优选IP_lxc5"
+      - "🇺🇸 Argo_优选VISA_lxc4"
+      - "全球加速"
+    url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
-    
-  - name: 狮城节点
+
+  - name: "狮城节点"
     type: url-test
-    include-all: true
-    filter: "新|坡|SG|(?i)Singapore"
+    proxies:
+      - "手动切换"
+      - "全球加速"
+    url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
-  
-  # --- 核心分组 (关键修正：必须使用 include-all) ---
-  - name: 手动切换
+
+  # --- 核心分组 ---
+  - name: "手动切换"
     type: select
-    include-all: true  # ✅ 修正：确保能看到所有节点
+    proxies:
+      - "全球加速"
+      - "🇭🇰 香港 vmess_auto"
+      - "🇯🇵 日本-vmess"
+      - "🇺🇸 美国"
+      - "🇺🇸 US"
+      - "🇺🇸 美国bug"
+      - "DIRECT"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
-    
-  - name: 自动选择
+
+  - name: "自动选择"
     type: url-test
-    include-all: true  # ✅ 修正：确保能测速所有节点
+    proxies:
+      - "全球加速"
+      - "手动切换"
+    url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
-    
-  - name: 全球加速
+
+  - name: "全球加速"
     type: select
-    proxies: 
-      - 自动选择
-      - 手动切换
-      - 香港节点
-      - 日本节点
-      - 台湾节点
-      - 美国节点
-      - 狮城节点
-      - DIRECT
+    proxies:
+      - "自动选择"
+      - "手动切换"
+      - "香港节点"
+      - "日本节点"
+      - "台湾节点"
+      - "美国节点"
+      - "狮城节点"
+      - "DIRECT"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png
-  
+
   # --- 应用分组 ---
-  - name: 苹果服务
+  - name: "苹果服务"
     type: select
-    proxies: [DIRECT, 全球加速, 手动切换]
+    proxies: ["DIRECT", "全球加速", "手动切换"]
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
-    
-  - name: 哔哩哔哩
+
+  - name: "哔哩哔哩"
     type: select
-    proxies: [DIRECT, 香港节点, 台湾节点]
+    proxies: ["DIRECT", "香港节点", "台湾节点"]
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/bilibili.png
-    
-  - name: Emby服务
+
+  - name: "Emby服务"
     type: select
-    proxies: [全球加速, 手动切换, DIRECT]
+    proxies: ["全球加速", "手动切换", "DIRECT"]
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Emby.png
-    
-  - name: 下载加速
+
+  - name: "下载加速"
     type: select
-    proxies: [全球加速, 美国节点, 狮城节点, 手动切换]
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Download.png
-    
-  - name: OpenAi
+    proxies:
+      - "DIRECT"
+      - "全球加速"
+      - "美国节点"
+      - "手动切换"
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png
+
+  - name: "OpenAi"
     type: select
-    proxies: [美国节点, 狮城节点, 日本节点, 手动切换]
+    proxies:
+      - "美国节点"
+      - "全球加速"
+      - "手动切换"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png
-    
-  - name: 国际媒体
+
+  - name: "国际媒体"
     type: select
-    proxies: [全球加速, 手动切换, 香港节点, 日本节点, 台湾节点, 美国节点, 狮城节点]
+    proxies:
+      - "全球加速"
+      - "手动切换"
+      - "香港节点"
+      - "日本节点"
+      - "台湾节点"
+      - "美国节点"
+      - "狮城节点"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
-    
-  - name: 谷歌服务
+
+  - name: "谷歌服务"
     type: select
-    proxies: [全球加速, 手动切换]
+    proxies: ["全球加速", "手动切换"]
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Google.png
-    
-  - name: 电报消息
+
+  - name: "电报消息"
     type: select
-    proxies: [全球加速, 手动切换, 香港节点, 日本节点, 美国节点]
+    proxies: ["全球加速", "手动切换", "香港节点", "日本节点", "美国节点"]
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
-    
-  - name: 推特服务
+
+  - name: "推特服务"
     type: select
-    proxies: [全球加速, 手动切换, 美国节点, 日本节点]
+    proxies: ["全球加速", "手动切换", "美国节点", "日本节点"]
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Twitter.png
-    
-  - name: 游戏平台
+
+  - name: "游戏平台"
     type: select
-    proxies: [DIRECT, 全球加速, 手动切换]
+    proxies:
+      - "DIRECT"
+      - "香港节点"
+      - "日本节点"
+      - "全球加速"
+      - "手动切换"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/GAME.png
-    
-  - name: AdBlock
+
+  - name: "AdBlock"
     type: select
-    proxies: [REJECT, DIRECT]
+    proxies: ["REJECT", "DIRECT"]
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Adblock.png
-  
+
   # --- 兜底分组 ---
-  - name: 兜底分流
+  - name: "兜底分流"
     type: select
-    proxies: [全球加速, 手动切换, DIRECT]
+    proxies: ["全球加速", "手动切换", "DIRECT"]
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
 
 #=========================================================
-# 3. 规则集 (Rule Providers)
+# 3. 规则集与分流规则 (无误杀版)
 #=========================================================
 rule-providers:
   AdBlock: {behavior: domain, interval: 86400, format: text, type: http, url: https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules_domainset.txt , path: ./ruleset/anti-ad-clash.txt}
@@ -242,38 +430,34 @@ rule-providers:
   Download: {behavior: classical, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml , path: ./ruleset/Download.yaml}
   ChinaIP: {behavior: ipcidr, interval: 86400, format: yaml, type: http, url: https://raw.githubusercontent.com/soffchen/GeoIP2-CN/release/clash-rule-provider.yml , path: ./ruleset/ChinaIP.yaml}
 
-#=========================================================
-# 4. 分流规则 (Rules) - 【国内直连优先 + UDP 兼容】
-#=========================================================
 rules:
-  # 1. 广告拦截 (最高优先)
+  # 1. 广告拦截（规则集）
   - RULE-SET,AdBlock,AdBlock
 
-  # 2. 直连规则 (优先放行国内流量，减少内核负担)
-  # 因为 ShellCrash 的 "CN_IP绕过" 已关闭，所以这里必须优先处理国内流量
+  # 2. 直连规则
   - RULE-SET,ChinaIP,DIRECT
   - RULE-SET,Direct,DIRECT
   - RULE-SET,Lan,DIRECT
   - GEOIP,CN,DIRECT
   - GEOIP,PRIVATE,DIRECT
 
-  # 3. [可选] 阻断 QUIC/UDP (为了防止视频电话卡顿，默认注释)
-  # 如果你看 YouTube 经常缓冲，可以把下面这行前面的 # 去掉
-  # - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
-
-  # 4. AI 服务优化 (Copilot 修正)
+  # 3. AI 服务优化（Azure OpenAI 精确匹配）
   - RULE-SET,OpenAi,OpenAi
   - DOMAIN-SUFFIX,copilot.microsoft.com,OpenAi
-  - DOMAIN-SUFFIX,bing.com,OpenAi
+  - DOMAIN-SUFFIX,conversation.microsoft.com,OpenAi
   - DOMAIN-SUFFIX,sydney.bing.com,OpenAi
+  - DOMAIN-SUFFIX,copilot-proxy.azure.com,OpenAi
+  - DOMAIN-SUFFIX,openai.azure.com,OpenAi
+  - DOMAIN-SUFFIX,aoai.openai.azure.com,OpenAi
+  - DOMAIN-SUFFIX,cognitiveservices.azure.com,OpenAi
 
-  # 5. 媒体服务
+  # 4. 媒体服务
   - RULE-SET,Emby,Emby服务
   - RULE-SET,BiliBili,哔哩哔哩
   - RULE-SET,Bahamut,台湾节点
   - RULE-SET,GlobalMedia,国际媒体
 
-  # 6. 常用服务
+  # 5. 常用服务
   - RULE-SET,Apple,苹果服务
   - RULE-SET,Github,全球加速
   - DOMAIN-SUFFIX,github.io,全球加速
@@ -286,8 +470,11 @@ rules:
   - RULE-SET,Game,游戏平台
   - RULE-SET,ProxyLite,全球加速
 
-  # 7. 下载流量 (需确保 ShellCrash "只代理常用端口" 已关闭)
+  # 6. 下载流量
   - RULE-SET,Download,下载加速
+
+  # 7. 广告关键词补充 (仅保留安全的)
+  - DOMAIN-KEYWORD,adservice,AdBlock
 
   # 8. 最终兜底
   - MATCH,兜底分流
