@@ -1,5 +1,5 @@
 #==========================================
-# @ConfigName ShellCrash 专用·逻辑修正版
+# @ConfigName ShellCrash 终极版
 # @Optimization 彻底切断 A<->B 死循环
 # @UpdateTime 2025-12-04 16:15
 #==========================================
@@ -229,6 +229,7 @@ proxy-groups:
     type: select
     proxies:
       - "美国节点"
+      - "日本节点"
       - "全球加速"
       - "手动切换"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png
