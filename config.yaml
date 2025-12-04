@@ -1,7 +1,7 @@
 #==========================================
-# @ConfigName ShellCrash 专用·循环修复版
-# @Optimization 移除策略组死循环 + 内置全节点
-# @UpdateTime 2025-12-04
+# @ConfigName ShellCrash 专用·逻辑修正版
+# @Optimization 彻底切断 A<->B 死循环
+# @UpdateTime 2025-12-04 16:15
 #==========================================
 
 # --- 基础设置 ---
@@ -63,7 +63,7 @@ sniffer:
       override-destination: true
 
 #=========================================================
-# 1. 代理节点 (17个节点)
+# 1. 代理节点
 #=========================================================
 proxies:
   - {name: "🇺🇸 美国bug", server: 107.172.216.145, port: 54658, type: vmess, uuid: 45685b58-aa74-4d53-d3d4-0b813574ef75, alterId: 0, cipher: auto, tls: false}
@@ -85,10 +85,10 @@ proxies:
   - {name: "🇳🇱 荷兰Vless-Eugene", server: 178.130.41.135, port: 11822, type: vless, uuid: 775e7712-26c8-4018-a6d9-3d4da5e4ee58, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: OWzHIi20S95-BoP9SBssILn3d_ygACV7R9Ib_fGNCCc, short-id: "b3f7367f5a"}, servername: yahoo.com, client-fingerprint: chrome, network: tcp}
 
 #=========================================================
-# 2. 策略组 (Proxy Groups) - 已打破死循环
+# 2. 策略组 (Proxy Groups)
 #=========================================================
 proxy-groups:
-  # --- 地区分组 (只放节点，不套娃) ---
+  # --- 地区分组 (底层：只包含节点) ---
   - name: "香港节点"
     type: url-test
     proxies:
@@ -126,20 +126,20 @@ proxy-groups:
   - name: "台湾节点"
     type: select
     proxies:
-      - "🇭🇰 香港 vmess_auto" # 无台湾节点，暂指向香港作为备用
+      - "🇭🇰 香港 vmess_auto" # 无台湾节点，暂借用香港
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
 
   - name: "狮城节点"
     type: select
     proxies:
-      - "DIRECT" # 无新加坡节点，暂指向直连
+      - "DIRECT" # 无新加坡节点，暂直连
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
 
-  # --- 核心分组 (内置所有节点) ---
+  # --- 核心分组 (关键修改：移除 "全球加速" 避免死循环) ---
   - name: "手动切换"
     type: select
     proxies:
-      - "全球加速"
+      # ❌ 删除了 "全球加速"，防止死循环
       - "🇺🇸 美国bug"
       - "isp"
       - "🇺🇸 US"
@@ -163,6 +163,7 @@ proxy-groups:
   - name: "自动选择"
     type: url-test
     proxies:
+      # ❌ 删除了 "全球加速"
       - "🇺🇸 美国bug"
       - "isp"
       - "🇺🇸 US"
@@ -185,6 +186,7 @@ proxy-groups:
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
 
+  # --- 顶层分组 ---
   - name: "全球加速"
     type: select
     proxies:
@@ -192,11 +194,13 @@ proxy-groups:
       - "手动切换"
       - "香港节点"
       - "日本节点"
+      - "台湾节点"
       - "美国节点"
+      - "狮城节点"
       - "DIRECT"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png
 
-  # --- 应用分组 ---
+  # --- 应用分组 (引用顶层或底层均可) ---
   - name: "苹果服务"
     type: select
     proxies: ["DIRECT", "全球加速", "手动切换"]
@@ -236,7 +240,9 @@ proxy-groups:
       - "手动切换"
       - "香港节点"
       - "日本节点"
+      - "台湾节点"
       - "美国节点"
+      - "狮城节点"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
 
   - name: "谷歌服务"
