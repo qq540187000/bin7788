@@ -67,7 +67,7 @@ sniffer:
 #=========================================================
 proxies:
   - {name: "🇺🇸 美国bug", server: 107.172.216.145, port: 54658, type: vmess, uuid: 45685b58-aa74-4d53-d3d4-0b813574ef75, alterId: 0, cipher: auto, tls: false}
-  - {name: "isp", server: xzj2.geniusdeer.top, port: 40841, type: ss, cipher: aes-256-gcm, password: 3lzSt59txArvrHQGukT9l0ppooFmNqwsthT6SdqtF48=}
+  - {name: "🇺🇸 isp", server: xzj2.geniusdeer.top, port: 40841, type: ss, cipher: aes-256-gcm, password: 3lzSt59txArvrHQGukT9l0ppooFmNqwsthT6SdqtF48=}
   - {name: "🇺🇸 US", server: 142.171.42.144, port: 80, type: vless, uuid: 5230d600-aa94-492f-90c9-42faf8c61f82, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: 2V-dGLrGFI9y5Q4TjOjAI8jpnxbAnzn4U4k1SSI5REs, short-id: "ab00ab"}, servername: tjdownload.pan.wo.cn, client-fingerprint: chrome, network: tcp}
   - {name: "🇺🇸 美国imznb.dpdns.org", server: www.visa.com.sg, port: 8443, type: vless, uuid: d6d1276b-f799-4019-9d8f-9a942e795409, tls: true, servername: imznb.dpdns.org, client-fingerprint: random, network: ws, ws-opts: {path: "/?ed=2560", headers: {Host: imznb.dpdns.org}}}
   - {name: "🇰🇷 韩国-VL", server: 129.154.50.93, port: 40123, type: vless, uuid: 3def21f6-5327-449a-890e-305e5fab0976, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: 35wXJnl9bkOzQgd2UDMCvy0wj7OfnaqNc0znQyM_dEU}, servername: www.iij.ad.jp, client-fingerprint: chrome, network: tcp}
@@ -78,7 +78,7 @@ proxies:
   - {name: "🇩🇪 德国-yzonde2p", server: po.radid.top, port: 90, type: vless, uuid: 6c5a101b-bf14-4f02-83b4-efbc3241ce47, tls: false, network: ws, ws-opts: {path: /, headers: {Host: po.radid.top}}}
   - {name: "🇯🇵 日本-vmess", server: 176.97.73.174, port: 53201, type: vmess, uuid: 3191e20e-6ebd-47d7-ad65-a20797e437ee, alterId: 0, cipher: auto, tls: false}
   - {name: "🇭🇰 香港 vmess_auto", server: 154.36.175.227, port: 30454, type: vmess, uuid: 14fbbb99-c88a-41aa-8dcd-8f18c957fb5b, alterId: 0, cipher: auto, tls: false}
-  - {name: "🇦🇺 澳大利亚vmess_auto", server: 165.101.29.232, port: 12355, type: vmess, uuid: dd8ba20a-3a64-4db3-b32b-fbc33d619489, alterId: 0, cipher: auto, tls: false}
+  - {name: "🇨🇳 中国台湾 vmess_auto", server: 165.101.29.232, port: 12355, type: vmess, uuid: dd8ba20a-3a64-4db3-b32b-fbc33d619489, alterId: 0, cipher: auto, tls: false}
   - {name: "🇺🇸 妖火🔥", server: 172.64.145.149, port: 443, type: vless, uuid: 95d8f2fc-6cb1-48dc-9efb-f9d683cf993c, tls: true, servername: love1025.imznb.dpdns.org, network: ws, ws-opts: {path: "/?fed=2048", headers: {Host: love1025.imznb.dpdns.org}}}
   - {name: "🇺🇸 Argo_优选IP_lxc5", server: cf.877774.xyz, port: 443, type: vmess, uuid: baeb364c-819c-46b0-ad56-4bc88e7d280e, alterId: 0, cipher: auto, tls: true, servername: tampa-feeling-opposed-tattoo.trycloudflare.com, network: ws, ws-opts: {path: /VNqm2W, headers: {Host: tampa-feeling-opposed-tattoo.trycloudflare.com}}}
   - {name: "🇺🇸 Argo_优选VISA_lxc4", type: vmess, server: www.visa.com, port: 443, uuid: a38ecc2f-b198-4029-b839-eb96aa93e7e8, cipher: auto, tls: true, servername: "", network: ws, alterId: 0, ws-opts: {path: "/PamZ6X", headers: {Host: "outsourcing-sport-joining-memo.trycloudflare.com"}}}
@@ -126,7 +126,7 @@ proxy-groups:
   - name: "台湾节点"
     type: select
     proxies:
-      - "🇭🇰 香港 vmess_auto" # 无台湾节点，暂借用香港
+      - "🇨🇳 中国台湾 vmess_auto" # 无台湾节点，暂借用香港
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
 
   - name: "狮城节点"
@@ -141,7 +141,7 @@ proxy-groups:
     proxies:
       # ❌ 删除了 "全球加速"，防止死循环
       - "🇺🇸 美国bug"
-      - "isp"
+      - "🇺🇸 isp"
       - "🇺🇸 US"
       - "🇺🇸 美国imznb.dpdns.org"
       - "🇰🇷 韩国-VL"
@@ -152,7 +152,7 @@ proxy-groups:
       - "🇩🇪 德国-yzonde2p"
       - "🇯🇵 日本-vmess"
       - "🇭🇰 香港 vmess_auto"
-      - "🇦🇺 澳大利亚vmess_auto"
+      - "🇨🇳 中国台湾 vmess_auto"
       - "🇺🇸 妖火🔥"
       - "🇺🇸 Argo_优选IP_lxc5"
       - "🇺🇸 Argo_优选VISA_lxc4"
@@ -165,7 +165,7 @@ proxy-groups:
     proxies:
       # ❌ 删除了 "全球加速"
       - "🇺🇸 美国bug"
-      - "isp"
+      - "🇺🇸 isp"
       - "🇺🇸 US"
       - "🇺🇸 美国imznb.dpdns.org"
       - "🇰🇷 韩国-VL"
@@ -176,7 +176,7 @@ proxy-groups:
       - "🇩🇪 德国-yzonde2p"
       - "🇯🇵 日本-vmess"
       - "🇭🇰 香港 vmess_auto"
-      - "🇦🇺 澳大利亚vmess_auto"
+      - "🇨🇳 中国台湾 vmess_auto"
       - "🇺🇸 妖火🔥"
       - "🇺🇸 Argo_优选IP_lxc5"
       - "🇺🇸 Argo_优选VISA_lxc4"
