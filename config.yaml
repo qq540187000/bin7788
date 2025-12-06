@@ -1,7 +1,7 @@
 #==========================================
-# @ConfigName ShellCrash 终极版
-# @Optimization 彻底切断 A<->B 死循环
-# @UpdateTime 2025-12-04 16:15
+# @ConfigName ShellCrash 正则自动分流版
+# @Optimization 节点写死 + 策略组正则抓取
+# @UpdateTime 2025-12-06
 #==========================================
 
 # --- 基础设置 ---
@@ -63,7 +63,7 @@ sniffer:
       override-destination: true
 
 #=========================================================
-# 1. 代理节点
+# 1. 代理节点 (你的 20 个节点)
 #=========================================================
 proxies:
   - {name: "🇺🇸 加州 bug 原生IP", server: 107.172.216.145, port: 54658, type: vmess, uuid: 45685b58-aa74-4d53-d3d4-0b813574ef75, alterId: 0, cipher: auto, tls: false}
@@ -87,17 +87,15 @@ proxies:
   - {name: "🇺🇸 美国lxc5", server: cf.877774.xyz, port: 443, type: vmess, uuid: 30266bf0-9094-46b5-9d07-c770e25e56ae, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, servername: html-potential-nights-broadcast.trycloudflare.com, network: ws, ws-opts: {path: "30266bf0", headers: {Host: html-potential-nights-broadcast.trycloudflare.com}}}
   - {name: "🇺🇸 美国 搬瓦工 广播IP", server: 23.252.107.221, port: 10001, type: vmess, uuid: 721868b3-10d9-4c89-bb0e-2b7f95e4a01b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: "/vmess"}}
 
-
-
 #=========================================================
 # 2. 策略组 (Proxy Groups)
+# 🟢 核心修改：全部换成了 filter 正则筛选，自动归类！
 #=========================================================
 proxy-groups:
-  # --- 地区分组 (底层：只包含节点) ---
+  # --- 地区分组 ---
   - name: "香港节点"
     type: url-test
-    proxies:
-      - "🇭🇰 香港 vmess_auto"
+    filter: "(?i)🇭🇰|HK|Hong|Kong|香港" # 自动抓取香港节点
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
@@ -105,8 +103,7 @@ proxy-groups:
 
   - name: "日本节点"
     type: url-test
-    proxies:
-      - "🇯🇵 日本-vmess"
+    filter: "(?i)🇯🇵|JP|Japan|日本" # 自动抓取日本节点
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
@@ -114,84 +111,44 @@ proxy-groups:
 
   - name: "美国节点"
     type: url-test
-    proxies:
-      - "🇺🇸 美国bug"
-      - "🇺🇸 US"
-      - "🇺🇸 美国imznb.dpdns.org"
-      - "🇺🇸 美国"
-      - "🇺🇸 美国铁柱免费分享优选"
-      - "🇺🇸 妖火🔥"
-      - "🇺🇸 Argo_优选IP_lxc5"
-      - "🇺🇸 Argo_优选VISA_lxc4"
+    filter: "(?i)🇺🇸|US|United States|美国" # 自动抓取美国节点
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
 
   - name: "台湾节点"
-    type: select
-    proxies:
-      - "🇨🇳 中国台湾 vmess_auto" # 无台湾节点，暂借用香港
+    type: url-test
+    filter: "(?i)🇨🇳|🇹🇼|TW|Taiwan|台湾" # 自动抓取台湾节点
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
 
   - name: "狮城节点"
-    type: select
-    proxies:
-      - "DIRECT" # 无新加坡节点，暂直连
+    type: url-test
+    filter: "(?i)🇸🇬|SG|Singapore|狮城|新加坡" # 自动抓取新加坡节点
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
-
-  # --- 核心分组 (关键修改：移除 "全球加速" 避免死循环) ---
+  
+  # --- 核心分组 ---
   - name: "手动切换"
     type: select
-    proxies:
-      # ❌ 删除了 "全球加速"，防止死循环
-      - "🇺🇸 美国bug"
-      - "🇺🇸 isp"
-      - "🇺🇸 US"
-      - "🇺🇸 美国imznb.dpdns.org"
-      - "🇰🇷 韩国-VL"
-      - "🇺🇸 美国"
-      - "🇺🇸 美国铁柱免费分享优选"
-      - "🇮🇷 伊朗"
-      - "🇩🇪 德国PY_Gen_vmess"
-      - "🇩🇪 德国-yzonde2p"
-      - "🇯🇵 日本-vmess"
-      - "🇭🇰 香港 vmess_auto"
-      - "🇨🇳 中国台湾 vmess_auto"
-      - "🇺🇸 妖火🔥"
-      - "🇺🇸 Argo_优选IP_lxc5"
-      - "🇺🇸 Argo_优选VISA_lxc4"
-      - "🇳🇱 荷兰Vless-Eugene"
-      - "DIRECT"
+    # 正则含义：排除 DIRECT 和 REJECT，抓取所有剩下的代理节点
+    filter: "^(?!.*(DIRECT|REJECT)).*" 
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
 
   - name: "自动选择"
     type: url-test
-    proxies:
-      # ❌ 删除了 "全球加速"
-      - "🇺🇸 美国bug"
-      - "🇺🇸 isp"
-      - "🇺🇸 US"
-      - "🇺🇸 美国imznb.dpdns.org"
-      - "🇰🇷 韩国-VL"
-      - "🇺🇸 美国"
-      - "🇺🇸 美国铁柱免费分享优选"
-      - "🇮🇷 伊朗"
-      - "🇩🇪 德国PY_Gen_vmess"
-      - "🇩🇪 德国-yzonde2p"
-      - "🇯🇵 日本-vmess"
-      - "🇭🇰 香港 vmess_auto"
-      - "🇨🇳 中国台湾 vmess_auto"
-      - "🇺🇸 妖火🔥"
-      - "🇺🇸 Argo_优选IP_lxc5"
-      - "🇺🇸 Argo_优选VISA_lxc4"
-      - "🇳🇱 荷兰Vless-Eugene"
+    filter: "^(?!.*(DIRECT|REJECT)).*"
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
 
-  # --- 顶层分组 ---
+  # --- 顶层分组 (引用上面的自动分组) ---
   - name: "全球加速"
     type: select
     proxies:
@@ -205,7 +162,7 @@ proxy-groups:
       - "DIRECT"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png
 
-  # --- 应用分组 (引用顶层或底层均可) ---
+  # --- 应用分组 ---
   - name: "苹果服务"
     type: select
     proxies: ["DIRECT", "全球加速", "手动切换"]
