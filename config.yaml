@@ -94,71 +94,13 @@ proxies:
 #=========================================================
 proxy-groups:
   # --- 地区分组 ---
-  - name: "香港节点"
-    type: url-test
-    # ⬇️ 这里是源头：定义所有节点列表，并命名为 &all-proxies
-    proxies: &all-proxies
-      - "🇺🇸 加州 bug 原生IP"
-      - "isp"
-      - "🇺🇸 美国 US"
-      - "🇺🇸 美国 imznb.dpdns.org"
-      - "🇺🇸 美国铁柱"
-      - "🇩🇪 德国鸡"
-      - "🇩🇪 德国 PY_Gen_vmess"
-      - "🇩🇪 德国-yzonde2p"
-      - "🇯🇵 日本 中性 广播IP"
-      - "🇭🇰 香港 vmess_auto"
-      - "🇨🇳 台湾vmess_auto"
-      - "🇸🇬 新加坡 妖火 广播IP"
-      - "🇳🇱 荷兰 广播IP"
-      - "🇺🇸 美国 lxc4"
-      - "🇻🇳 越南原生IP BP"
-      - "🇮🇳 印度①"
-      - "🇮🇳 印度②"
-      - "🇺🇸 美国 洛杉矶 家庭IP"
-      - "🇺🇸 美国lxc5"
-      - "🇺🇸 美国 搬瓦工 广播IP"
-    filter: "(?i)🇭🇰|HK|Hong|Kong|香港" # 只筛选香港
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png
 
-  - name: "日本节点"
-    type: url-test
-    proxies: *all-proxies # ⬅️ 引用上面的列表
-    filter: "(?i)🇯🇵|JP|Japan|日本" # 只筛选日本
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png
+  - {name: 香港节点, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "港|HK|(?i)Hong", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png }             
+  - {name: 日本节点, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "日|东京|JP|(?i)Japan", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png }
+  - {name: 台湾节点, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "台|湾|TW|(?i)Taiwan", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png }
+  - {name: 美国节点, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "美|US|(?i)States|American", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png }
+  - {name: 狮城节点, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "新|坡|SG|(?i)Singapore", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png }
 
-  - name: "美国节点"
-    type: url-test
-    proxies: *all-proxies # ⬅️ 引用
-    filter: "(?i)🇺🇸|US|United States|美国" # 只筛选美国
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
-
-  - name: "台湾节点"
-    type: url-test
-    proxies: *all-proxies # ⬅️ 引用
-    filter: "(?i)🇨🇳|🇹🇼|TW|Taiwan|台湾" # 只筛选台湾
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
-
-  - name: "狮城节点"
-    type: url-test
-    proxies: *all-proxies # ⬅️ 引用
-    filter: "(?i)🇸🇬|SG|Singapore|狮城|新加坡" # 只筛选新加坡
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
   
   # --- 核心分组 ---
   - name: "手动切换"
