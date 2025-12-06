@@ -88,14 +88,37 @@ proxies:
   - {name: "🇺🇸 美国 搬瓦工 广播IP", server: 23.252.107.221, port: 10001, type: vmess, uuid: 721868b3-10d9-4c89-bb0e-2b7f95e4a01b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: "/vmess"}}
 
 #=========================================================
+#=========================================================
 # 2. 策略组 (Proxy Groups)
-# 🟢 核心修改：全部换成了 filter 正则筛选，自动归类！
+# 🟢 优化版：使用 YAML 锚点 (&) 和 引用 (*) 统一管理
 #=========================================================
 proxy-groups:
   # --- 地区分组 ---
   - name: "香港节点"
     type: url-test
-    filter: "(?i)🇭🇰|HK|Hong|Kong|香港" # 自动抓取香港节点
+    # ⬇️ 这里是源头：定义所有节点列表，并命名为 &all-proxies
+    proxies: &all-proxies
+      - "🇺🇸 加州 bug 原生IP"
+      - "isp"
+      - "🇺🇸 美国 US"
+      - "🇺🇸 美国 imznb.dpdns.org"
+      - "🇺🇸 美国铁柱"
+      - "🇩🇪 德国鸡"
+      - "🇩🇪 德国 PY_Gen_vmess"
+      - "🇩🇪 德国-yzonde2p"
+      - "🇯🇵 日本 中性 广播IP"
+      - "🇭🇰 香港 vmess_auto"
+      - "🇨🇳 台湾vmess_auto"
+      - "🇸🇬 新加坡 妖火 广播IP"
+      - "🇳🇱 荷兰 广播IP"
+      - "🇺🇸 美国 lxc4"
+      - "🇻🇳 越南原生IP BP"
+      - "🇮🇳 印度①"
+      - "🇮🇳 印度②"
+      - "🇺🇸 美国 洛杉矶 家庭IP"
+      - "🇺🇸 美国lxc5"
+      - "🇺🇸 美国 搬瓦工 广播IP"
+    filter: "(?i)🇭🇰|HK|Hong|Kong|香港" # 只筛选香港
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
@@ -103,7 +126,8 @@ proxy-groups:
 
   - name: "日本节点"
     type: url-test
-    filter: "(?i)🇯🇵|JP|Japan|日本" # 自动抓取日本节点
+    proxies: *all-proxies # ⬅️ 引用上面的列表
+    filter: "(?i)🇯🇵|JP|Japan|日本" # 只筛选日本
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
@@ -111,7 +135,8 @@ proxy-groups:
 
   - name: "美国节点"
     type: url-test
-    filter: "(?i)🇺🇸|US|United States|美国" # 自动抓取美国节点
+    proxies: *all-proxies # ⬅️ 引用
+    filter: "(?i)🇺🇸|US|United States|美国" # 只筛选美国
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
@@ -119,7 +144,8 @@ proxy-groups:
 
   - name: "台湾节点"
     type: url-test
-    filter: "(?i)🇨🇳|🇹🇼|TW|Taiwan|台湾" # 自动抓取台湾节点
+    proxies: *all-proxies # ⬅️ 引用
+    filter: "(?i)🇨🇳|🇹🇼|TW|Taiwan|台湾" # 只筛选台湾
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
@@ -127,7 +153,8 @@ proxy-groups:
 
   - name: "狮城节点"
     type: url-test
-    filter: "(?i)🇸🇬|SG|Singapore|狮城|新加坡" # 自动抓取新加坡节点
+    proxies: *all-proxies # ⬅️ 引用
+    filter: "(?i)🇸🇬|SG|Singapore|狮城|新加坡" # 只筛选新加坡
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
@@ -136,19 +163,20 @@ proxy-groups:
   # --- 核心分组 ---
   - name: "手动切换"
     type: select
-    # 正则含义：排除 DIRECT 和 REJECT，抓取所有剩下的代理节点
-    filter: "^(?!.*(DIRECT|REJECT)).*" 
+    proxies: *all-proxies # ⬅️ 引用
+    filter: "^(?!.*(DIRECT|REJECT)).*" # 筛选所有非直连节点
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
 
   - name: "自动选择"
     type: url-test
-    filter: "^(?!.*(DIRECT|REJECT)).*"
+    proxies: *all-proxies # ⬅️ 引用
+    filter: "^(?!.*(DIRECT|REJECT)).*" # 筛选所有非直连节点
     url: "http://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png
 
-  # --- 顶层分组 (引用上面的自动分组) ---
+  # --- 顶层分组 (无需修改，因为引用的是组名) ---
   - name: "全球加速"
     type: select
     proxies:
@@ -162,7 +190,7 @@ proxy-groups:
       - "DIRECT"
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png
 
-  # --- 应用分组 ---
+  # --- 应用分组 (无需修改) ---
   - name: "苹果服务"
     type: select
     proxies: ["DIRECT", "全球加速", "手动切换"]
@@ -243,6 +271,7 @@ proxy-groups:
     type: select
     proxies: ["全球加速", "手动切换", "DIRECT"]
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
+
 
 #=========================================================
 # 3. 规则集与分流规则
