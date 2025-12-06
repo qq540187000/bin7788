@@ -66,23 +66,27 @@ sniffer:
 # 1. 代理节点
 #=========================================================
 proxies:
-  - {name: "🇺🇸 美国bug", server: 107.172.216.145, port: 54658, type: vmess, uuid: 45685b58-aa74-4d53-d3d4-0b813574ef75, alterId: 0, cipher: auto, tls: false}
-  - {name: "🇺🇸 isp", server: xzj2.geniusdeer.top, port: 40841, type: ss, cipher: aes-256-gcm, password: 3lzSt59txArvrHQGukT9l0ppooFmNqwsthT6SdqtF48=}
-  - {name: "🇺🇸 US", server: 142.171.42.144, port: 80, type: vless, uuid: 5230d600-aa94-492f-90c9-42faf8c61f82, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: 2V-dGLrGFI9y5Q4TjOjAI8jpnxbAnzn4U4k1SSI5REs, short-id: "ab00ab"}, servername: tjdownload.pan.wo.cn, client-fingerprint: chrome, network: tcp}
-  - {name: "🇺🇸 美国imznb.dpdns.org", server: www.visa.com.sg, port: 8443, type: vless, uuid: d6d1276b-f799-4019-9d8f-9a942e795409, tls: true, servername: imznb.dpdns.org, client-fingerprint: random, network: ws, ws-opts: {path: "/?ed=2560", headers: {Host: imznb.dpdns.org}}}
-  - {name: "🇰🇷 韩国-VL", server: 129.154.50.93, port: 40123, type: vless, uuid: 3def21f6-5327-449a-890e-305e5fab0976, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: 35wXJnl9bkOzQgd2UDMCvy0wj7OfnaqNc0znQyM_dEU}, servername: www.iij.ad.jp, client-fingerprint: chrome, network: tcp}
-  - {name: "🇺🇸 美国", server: us.568686.xyz, port: 443, type: vless, uuid: e12b0805-f941-4e5e-9889-8faa177fa2d8, tls: true, alpn: ["null"], servername: us.568686.xyz, network: ws, ws-opts: {path: /, headers: {Host: us.568686.xyz}}}
-  - {name: "🇺🇸 美国铁柱免费分享优选", server: 104.25.183.153, port: 443, type: vmess, uuid: 9f761cb6-aae2-4ca1-937b-fb190629e304, alterId: 0, cipher: auto, tls: true, servername: v2-ray.eu.org, network: ws, ws-opts: {path: /, headers: {Host: v2-ray.eu.org}}}
-  - {name: "🇮🇷 伊朗", server: po.radid.top, port: 20087, type: vless, uuid: 3baf2ce8-db1e-456d-a11a-e114e4ba2116, tls: false, network: grpc, grpc-opts: {grpc-mode: gun, grpc-service-name: /}}
-  - {name: "🇩🇪 德国PY_Gen_vmess", server: po.radid.top, port: 20086, type: vmess, uuid: 8a1d5381-a3b6-4a7c-8db5-8f9255cb5081, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /, headers: {Host: po.radid.top}}}
-  - {name: "🇩🇪 德国-yzonde2p", server: po.radid.top, port: 90, type: vless, uuid: 6c5a101b-bf14-4f02-83b4-efbc3241ce47, tls: false, network: ws, ws-opts: {path: /, headers: {Host: po.radid.top}}}
-  - {name: "🇯🇵 日本-vmess", server: 176.97.73.174, port: 53201, type: vmess, uuid: 3191e20e-6ebd-47d7-ad65-a20797e437ee, alterId: 0, cipher: auto, tls: false}
+  - {name: "🇺🇸 加州 bug 原生IP", server: 107.172.216.145, port: 54658, type: vmess, uuid: 45685b58-aa74-4d53-d3d4-0b813574ef75, alterId: 0, cipher: auto, tls: false}
+  - {name: "isp", server: xzj2.geniusdeer.top, port: 40841, type: ss, cipher: aes-256-gcm, password: 3lzSt59txArvrHQGukT9l0ppooFmNqwsthT6SdqtF48=}
+  - {name: "🇺🇸 美国 US", server: 142.171.42.144, port: 80, type: vless, uuid: 5230d600-aa94-492f-90c9-42faf8c61f82, tls: true, skip-cert-verify: true, servername: tjdownload.pan.wo.cn, flow: xtls-rprx-vision, reality-opts: {public-key: 2V-dGLrGFI9y5Q4TjOjAI8jpnxbAnzn4U4k1SSI5REs, short-id: "ab00ab"}, client-fingerprint: chrome}
+  - {name: "🇺🇸 美国 imznb.dpdns.org", server: www.visa.com.sg, port: 8443, type: vless, uuid: d6d1276b-f799-4019-9d8f-9a942e795409, tls: true, skip-cert-verify: true, servername: imznb.dpdns.org, network: ws, ws-opts: {path: "/?ed=2560", headers: {Host: imznb.dpdns.org}}}
+  - {name: "🇺🇸 美国铁柱", server: 104.25.183.153, port: 443, type: vmess, uuid: 9f761cb6-aae2-4ca1-937b-fb190629e304, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, servername: v2-ray.eu.org, network: ws, ws-opts: {path: "/", headers: {Host: v2-ray.eu.org}}}
+  - {name: "🇩🇪 德国鸡", server: po.radid.top, port: 20087, type: vless, uuid: 3baf2ce8-db1e-456d-a11a-e114e4ba2116, tls: false, network: grpc, grpc-opts: {grpc-service-name: ""}}
+  - {name: "🇩🇪 德国 PY_Gen_vmess", server: po.radid.top, port: 20086, type: vmess, uuid: 8a1d5381-a3b6-4a7c-8db5-8f9255cb5081, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: "/"}}
+  - {name: "🇩🇪 德国-yzonde2p", server: po.radid.top, port: 90, type: vless, uuid: 6c5a101b-bf14-4f02-83b4-efbc3241ce47, tls: false, network: ws, ws-opts: {path: "/"}}
+  - {name: "🇯🇵 日本 中性 广播IP", server: 176.97.73.174, port: 53201, type: vmess, uuid: 3191e20e-6ebd-47d7-ad65-a20797e437ee, alterId: 0, cipher: auto, tls: false}
   - {name: "🇭🇰 香港 vmess_auto", server: 154.36.175.227, port: 30454, type: vmess, uuid: 14fbbb99-c88a-41aa-8dcd-8f18c957fb5b, alterId: 0, cipher: auto, tls: false}
-  - {name: "🇨🇳 中国台湾 vmess_auto", server: 165.101.29.232, port: 12355, type: vmess, uuid: dd8ba20a-3a64-4db3-b32b-fbc33d619489, alterId: 0, cipher: auto, tls: false}
-  - {name: "🇺🇸 妖火🔥", server: 172.64.145.149, port: 443, type: vless, uuid: 95d8f2fc-6cb1-48dc-9efb-f9d683cf993c, tls: true, servername: love1025.imznb.dpdns.org, network: ws, ws-opts: {path: "/?fed=2048", headers: {Host: love1025.imznb.dpdns.org}}}
-  - {name: "🇺🇸 Argo_优选IP_lxc5", server: cf.877774.xyz, port: 443, type: vmess, uuid: baeb364c-819c-46b0-ad56-4bc88e7d280e, alterId: 0, cipher: auto, tls: true, servername: tampa-feeling-opposed-tattoo.trycloudflare.com, network: ws, ws-opts: {path: /VNqm2W, headers: {Host: tampa-feeling-opposed-tattoo.trycloudflare.com}}}
-  - {name: "🇺🇸 Argo_优选VISA_lxc4", type: vmess, server: www.visa.com, port: 443, uuid: a38ecc2f-b198-4029-b839-eb96aa93e7e8, cipher: auto, tls: true, servername: "", network: ws, alterId: 0, ws-opts: {path: "/PamZ6X", headers: {Host: "outsourcing-sport-joining-memo.trycloudflare.com"}}}
-  - {name: "🇳🇱 荷兰Vless-Eugene", server: 178.130.41.135, port: 11822, type: vless, uuid: 775e7712-26c8-4018-a6d9-3d4da5e4ee58, tls: true, flow: xtls-rprx-vision, reality-opts: {public-key: OWzHIi20S95-BoP9SBssILn3d_ygACV7R9Ib_fGNCCc, short-id: "b3f7367f5a"}, servername: yahoo.com, client-fingerprint: chrome, network: tcp}
+  - {name: "🇨🇳 台湾vmess_auto", server: 165.101.29.232, port: 12355, type: vmess, uuid: dd8ba20a-3a64-4db3-b32b-fbc33d619489, alterId: 0, cipher: auto, tls: false}
+  - {name: "🇸🇬 新加坡 妖火 广播IP", server: 172.64.145.149, port: 443, type: vless, uuid: 95d8f2fc-6cb1-48dc-9efb-f9d683cf993c, tls: true, skip-cert-verify: true, servername: love1025.imznb.dpdns.org, network: ws, ws-opts: {path: "/?fed=2048", headers: {Host: love1025.imznb.dpdns.org}}}
+  - {name: "🇳🇱 荷兰 广播IP", server: 178.130.41.135, port: 11822, type: vless, uuid: 775e7712-26c8-4018-a6d9-3d4da5e4ee58, tls: true, skip-cert-verify: true, servername: yahoo.com, flow: xtls-rprx-vision, reality-opts: {public-key: OWzHIi20S95-BoP9SBssILn3d_ygACV7R9Ib_fGNCCc, short-id: "b3f7367f5a"}, client-fingerprint: chrome}
+  - {name: "🇺🇸 美国 lxc4", server: www.visa.com, port: 443, type: vmess, uuid: a38ecc2f-b198-4029-b839-eb96aa93e7e8, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, servername: outsourcing-sport-joining-memo.trycloudflare.com, network: ws, ws-opts: {path: "/PamZ6X", headers: {Host: outsourcing-sport-joining-memo.trycloudflare.com}}}
+  - {name: "🇻🇳 越南原生IP BP", server: 36.50.135.96, port: 30880, type: ss, cipher: aes-128-gcm, password: QwErTyUiOp}
+  - {name: "🇮🇳 印度①", server: id2.wpairplane.com, port: 9000, type: vmess, uuid: 77aad73d-03e7-441b-9bc5-98d13535ba3e, alterId: 0, cipher: auto, tls: false}
+  - {name: "🇮🇳 印度②", server: id1.wpairplane.com, port: 9000, type: vmess, uuid: d96ab248-733f-425a-8e2d-d4c88822aa5a, alterId: 0, cipher: auto, tls: false}
+  - {name: "🇺🇸 美国 洛杉矶 家庭IP", server: 216.167.127.32, port: 54376, type: ss, cipher: aes-256-gcm, password: 1Yf6gAhxhd}
+  - {name: "🇺🇸 美国lxc5", server: cf.877774.xyz, port: 443, type: vmess, uuid: 30266bf0-9094-46b5-9d07-c770e25e56ae, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, servername: html-potential-nights-broadcast.trycloudflare.com, network: ws, ws-opts: {path: "30266bf0", headers: {Host: html-potential-nights-broadcast.trycloudflare.com}}}
+  - {name: "🇺🇸 美国 搬瓦工 广播IP", server: 23.252.107.221, port: 10001, type: vmess, uuid: 721868b3-10d9-4c89-bb0e-2b7f95e4a01b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: "/vmess"}}
+
 
 #=========================================================
 # 2. 策略组 (Proxy Groups)
