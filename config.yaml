@@ -95,8 +95,8 @@ proxies:
 proxy-groups:
   # --- 地区分组 ---
 
-  - {name: 手动切换, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "^(?!.*(DIRECT|REJECT)).*"，icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png }
-  - {name: 自动选择, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "^(?!.*(DIRECT|REJECT)).*"，icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png }
+  - {name: 手动切换, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "^(?!.*(DIRECT|REJECT)).*", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png }
+  - {name: 自动选择, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "^(?!.*(DIRECT|REJECT)).*", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png }
   - {name: 香港节点, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "港|HK|(?i)Hong", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png }             
   - {name: 日本节点, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "日|东京|JP|(?i)Japan", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png }
   - {name: 台湾节点, type: url-test, include-all: true, interval: 600, tolerance: 50,  filter: "台|湾|TW|(?i)Taiwan", icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png }
