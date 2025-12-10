@@ -241,7 +241,7 @@ rules:
   # ... (其他 AI 规则保持不变)
 
   # 4. 媒体服务 (必须提上来！)
-  - RULE-SET,TikTok,TikTok        <-- 移到这里！确保 TikTok 流量优先匹配代理
+  - RULE-SET,TikTok,TikTok    
   - RULE-SET,Emby,Emby服务
   - RULE-SET,BiliBili,哔哩哔哩
   - RULE-SET,Bahamut,台湾节点
