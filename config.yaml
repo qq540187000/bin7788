@@ -48,7 +48,7 @@ proxy-providers:
     override:
           additional-prefix: "机场1"
     # ⚠️⚠️⚠️ 请在下方填入你的真实订阅链接 ⚠️⚠️⚠️
-    url: "你的订阅链接填在这里" 
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/qq540187000/bin7788/main/node.txt" 
     path: ./proxy_providers/机场1.yaml
 
 profile:
