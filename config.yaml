@@ -19,8 +19,8 @@ experimental:
         value: "en-US,en;q=0.9"
 unified-delay: true
 tcp-concurrent: true
-log-level: silent
-find-process-mode: always
+log-level: info
+find-process-mode: off
 global-client-fingerprint: chrome
 
 external-controller: 9090
@@ -31,7 +31,7 @@ external-controller-cors:
     - "*"
   allow-private-network: true
 
-
+# 锚点设置
 p: &p
   type: http
   interval: 86400
@@ -40,11 +40,8 @@ p: &p
     url: https://www.gstatic.com/generate_204
     interval: 300
   proxy: 订阅更新
-  header: # 如遇订阅加载不出来请切换ua
-      User-Agent:  # 使用注释法由上到下 默认使用第一个
-    #    - "clash-verge/v2.2.3"
-   #     - "ClashMetaForAndroid/2.11.2.Meta"
-   #     - "ClashforWindows/0.19.23"
+  header: 
+      User-Agent: 
         - "clash.meta"
         - "mihomo"
 A: &A
@@ -52,24 +49,22 @@ A: &A
   use:
   - 机场1
 
-
 All: &All
   type: url-test
   use:
   - 机场1
 
-proxy-providers: # ← 此函数位置请勿变动！此为模块更新时备份恢复订阅变量范围 ↓
-
+# 代理集合
+proxy-providers:
   机场1:
     <<: *p
     override:
           additional-prefix: "机场1"
-    url: "https://ghproxy.net/https://raw.githubusercontent.com/qq540187000/bin7788/main/node.txt"
+    # ⚠️⚠️⚠️ 请在下方填入你的真实订阅链接 ⚠️⚠️⚠️
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/qq540187000/bin7788/main/node.txt" 
     path: ./proxy_providers/机场1.yaml
 
-
-
-profile: # ← 此函数位置请勿变动！此为模块更新时备份恢复订阅变量范围 ↑
+profile:
   store-selected: true
   store-fake-ip: true
 
@@ -88,13 +83,10 @@ sniffer:
       ports: [443, 8443]
   force-domain:
     - "+.v2ex.com"
-  skip-domain: # 如遇需内部通信的应用请放行该域名
-    - "Mijia Cloud"
-# —————————
 
 # 网卡模块
 tun:
-  enable: true  # true 开 # false 默认关
+  enable: true
   device: Meta
   stack: mixed
   dns-hijack:
@@ -105,25 +97,14 @@ tun:
   strict-route: true
   auto-redirect: false
   auto-detect-interface: true
-  exclude-package:
-    # _____________________# 三星专供 ↓ 范围
-#    - com.samsung.android.messaging
-#    - com.samsung.android.app.telephonyui
-#    - com.samsung.android.dialer
-#    - com.samsung.android.incallui
-#    - com.samsung.android.smartcallprovider
-#    - com.samsung.android.intellivoiceservice
-#    - com.android.settings
-#    - com.qti.qcc
-#    - com.sec.epdg
-#    - com.sec.imsservice
 
+# DNS 模块
 dns:
   enable: true
   ipv6: false
   listen: 0.0.0.0:1053
-  enhanced-mode: redir-host
-  fake-ip-range: 172.20.0.1/16
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
     - "RULE-SET:CN_域"
     - "RULE-SET:Private_域"
@@ -143,7 +124,6 @@ dns:
   nameserver:
     - https://dns.google/dns-query#DNS连接&h3=true
     - https://cloudflare-dns.com/dns-query#DNS连接&h3=true
-# —————————
 
 proxies:
     - {name: 🇨🇳 大陆, type: direct, udp: true}
@@ -182,7 +162,8 @@ CNproxy_groups: &CNproxy_groups
       - 美国节点
       - 其它地区
     <<: *A
-# —————————
+
+# 策略组详情
 proxy-groups:
   - name: 总模式
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/All.svg"
@@ -234,10 +215,6 @@ proxy-groups:
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Telegram.svg"
     <<: *proxy_groups
 
-  - name: Discord
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Discord.svg"
-    <<: *proxy_groups
-
   - name: Spotify
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Spotify.svg"
     <<: *proxy_groups
@@ -248,10 +225,6 @@ proxy-groups:
 
   - name: YouTube
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/YouTube.svg"
-    <<: *proxy_groups
-
-  - name: Netflix
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Netflix.svg"
     <<: *proxy_groups
 
   - name: Google
@@ -343,7 +316,6 @@ proxy-groups:
     interval: 86400
     proxies:
       - 🇨🇳 大陆
-# —————————
 
 rule-anchor:
   Local: &Local
@@ -355,15 +327,11 @@ rule-anchor:
   Domain: &Domain
     {type: http, behavior: domain, format: mrs, interval: 86400}
 
-# —————————
-
-
-# 部分规则上游为https://github.com/blackmatrix7/ios_rule_script
-# Github Actions 每日自动同步跟随更新
+# 规则源
 rule-providers:
-  自定义出站: # 主要用于广告误杀自定义放行
+  自定义出站:
     <<: *Local
-    path: ./etc/自定义规则.list # 请按路径新建文件及建立你需要的规则
+    path: ./etc/自定义规则.list
 
   WebRTC_端/域:
     <<: *Classical
@@ -490,20 +458,6 @@ rule-providers:
     path: ./rules/OpenAI_IP.mrs
     url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/OpenAI/OpenAI_OCD_IP.mrs"
 
-  Netflix_域:
-    <<: *Domain
-    path: ./rules/Netflix.mrs
-    url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/Netflix/Netflix_OCD_Domain.mrs"
-  Netflix_IP:
-    <<: *IPCIDR
-    path: ./rules/Netflix_IP.mrs
-    url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/Netflix/Netflix_OCD_IP.mrs"
-
-  Discord_域:
-    <<: *Domain
-    path: ./rules/Discord.mrs
-    url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/Discord/Discord_OCD_Domain.mrs"
-
   GitHub_域:
     <<: *Domain
     path: ./rules/GitHub.mrs
@@ -526,7 +480,6 @@ rule-providers:
     <<: *IPCIDR
     path: ./rules/Private_IP.mrs
     url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/Lan/Lan_OCD_IP.mrs"
-# —————————
 
 rules:
   - DST-PORT,53,🌐 DNS_Hijack
@@ -534,22 +487,14 @@ rules:
 
   - RULE-SET,自定义出站,白名单出站
 
-  - PROCESS-PATH,com.ss.android.ugc.aweme,抖音
   - RULE-SET,DouYin_域,抖音
-
-  - PROCESS-PATH,com.xingin.xhs,小红书
   - RULE-SET,XiaoHongShu_域,小红书
-
-  - PROCESS-PATH,tv.danmaku.bili,BiliBili
+  
   - RULE-SET,BiliBili_域,BiliBili
   - RULE-SET,BiliBili_IP,BiliBili
 
   - RULE-SET,Steam_域,Steam
-
   - RULE-SET,GitHub_域,GitHub
-
-  - RULE-SET,Discord_域,Discord
-
   - RULE-SET,TikTok_域,TikTok
 
   - RULE-SET,Twitter_域,Twitter(X)
@@ -562,9 +507,6 @@ rules:
 
   - RULE-SET,Google_域,Google
   - RULE-SET,Google_IP,Google
-
-  - RULE-SET,Netflix_域,Netflix
-  - RULE-SET,Netflix_IP,Netflix
 
   - RULE-SET,Spotify_域,Spotify
   - RULE-SET,Spotify_IP,Spotify
@@ -591,4 +533,3 @@ rules:
   - RULE-SET,Private_IP,🇨🇳 大陆
 
   - MATCH,漏网之鱼
-# —————————
