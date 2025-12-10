@@ -31,37 +31,24 @@ external-controller-cors:
     - "*"
   allow-private-network: true
 
-# 锚点设置
-p: &p
-  type: http
-  interval: 86400
-  health-check:
-    enable: true
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-  proxy: 订阅更新
-  header: 
+# 代理集合 (已展开配置，防止报错)
+proxy-providers:
+  机场1:
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: 订阅更新
+    header: 
       User-Agent: 
         - "clash.meta"
         - "mihomo"
-A: &A
-  filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
-  use:
-  - 机场1
-
-All: &All
-  type: url-test
-  use:
-  - 机场1
-
-# 代理集合
-proxy-providers:
-  机场1:
-    <<: *p
     override:
           additional-prefix: "机场1"
     # ⚠️⚠️⚠️ 请在下方填入你的真实订阅链接 ⚠️⚠️⚠️
-    url: "https://ghproxy.net/https://raw.githubusercontent.com/qq540187000/bin7788/main/node.txt" 
+    url: "你的订阅链接填在这里" 
     path: ./proxy_providers/机场1.yaml
 
 profile:
@@ -130,40 +117,7 @@ proxies:
     - {name: ⛔️ 拒绝连接, type: reject}
     - {name: 🌐 DNS_Hijack, type: dns}
 
-proxy_groups: &proxy_groups
-    type: select
-    proxies:
-      - 总模式
-      - ⛔️ 拒绝连接
-      - 延迟最低
-      - 故障转移
-      - 负载均衡
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-      - 其它地区
-      - 🇨🇳 大陆
-    <<: *A
-CNproxy_groups: &CNproxy_groups
-    type: select
-    proxies:
-      - 🇨🇳 大陆
-      - ⛔️ 拒绝连接
-      - 总模式
-      - 延迟最低
-      - 故障转移
-      - 负载均衡
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-      - 其它地区
-    <<: *A
-
-# 策略组详情
+# 策略组详情 (所有引用已展开，修复报错)
 proxy-groups:
   - name: 总模式
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/All.svg"
@@ -189,125 +143,447 @@ proxy-groups:
 
   - name: 小红书
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/XiaoHongShu.svg"
-    <<: *CNproxy_groups
+    type: select
+    proxies:
+      - 🇨🇳 大陆
+      - ⛔️ 拒绝连接
+      - 总模式
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 抖音
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/DouYin.svg"
-    <<: *CNproxy_groups
+    type: select
+    proxies:
+      - 🇨🇳 大陆
+      - ⛔️ 拒绝连接
+      - 总模式
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: BiliBili
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/BiliBili.svg"
-    <<: *CNproxy_groups
+    type: select
+    proxies:
+      - 🇨🇳 大陆
+      - ⛔️ 拒绝连接
+      - 总模式
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Steam
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Steam.svg"
-    <<: *CNproxy_groups
+    type: select
+    proxies:
+      - 🇨🇳 大陆
+      - ⛔️ 拒绝连接
+      - 总模式
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Apple
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Apple.svg"
-    <<: *CNproxy_groups
+    type: select
+    proxies:
+      - 🇨🇳 大陆
+      - ⛔️ 拒绝连接
+      - 总模式
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Microsoft
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Microsoft.svg"
-    <<: *CNproxy_groups
+    type: select
+    proxies:
+      - 🇨🇳 大陆
+      - ⛔️ 拒绝连接
+      - 总模式
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Telegram
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Telegram.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Spotify
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Spotify.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: TikTok
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/TikTok.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: YouTube
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/YouTube.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Google
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Google.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: GoogleFCM
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/GoogleFCM.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Facebook
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Facebook.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: OpenAI
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/OpenAI.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: GitHub
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/GitHub.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Twitter(X)
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Twitter.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: DNS连接
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/DNS.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 漏网之鱼
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/HBASE-copy.svg"
-    <<: *proxy_groups
+    type: select
+    proxies:
+      - 总模式
+      - ⛔️ 拒绝连接
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+      - 🇨🇳 大陆
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 白名单出站
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/User.svg"
-    <<: *CNproxy_groups
+    type: select
+    proxies:
+      - 🇨🇳 大陆
+      - ⛔️ 拒绝连接
+      - 总模式
+      - 延迟最低
+      - 故障转移
+      - 负载均衡
+      - 香港节点
+      - 台湾节点
+      - 新加坡节点
+      - 日本节点
+      - 美国节点
+      - 其它地区
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 延迟最低
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Return.svg"
     type: url-test
-    <<: *A
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 故障转移
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Return.svg"
     type: fallback
-    <<: *A
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 负载均衡
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Return.svg"
     type: load-balance
     strategy: round-robin
-    <<: *A
+    use:
+      - 机场1
+    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 台湾节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/CN.svg"
     filter: "^(?=.*(台|新北|彰化|TW|Taiwan)).*$"
-    <<: *All
+    type: url-test
+    use:
+      - 机场1
 
   - name: 香港节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/HK.svg"
     filter: "^(?=.*(港|HK|hk|Hong Kong|HongKong|hongkong)).*$"
-    <<: *All
+    type: url-test
+    use:
+      - 机场1
 
   - name: 日本节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/JP.svg"
     filter: "^(?=.*(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan)).*$"
-    <<: *All
+    type: url-test
+    use:
+      - 机场1
 
   - name: 美国节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/US.svg"
     filter: "^(?=.*(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)).*$"
-    <<: *All
+    type: url-test
+    use:
+      - 机场1
 
   - name: 新加坡节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Singapore.svg"
     filter: "^(?=.*(新加坡|坡|狮城|SG|Singapore)).*$"
-    <<: *All
+    type: url-test
+    use:
+      - 机场1
 
   - name: 其它地区
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Globe.svg"
     filter: "^(?!.*(港|HK|hk|Hong Kong|HongKong|hongkong|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|台|新北|彰化|TW|Taiwan|新加坡|坡|狮城|SG|Singapore|灾|网易|Netease|套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网)).*$"
-    <<: *All
+    type: url-test
+    use:
+      - 机场1
     
   - name: CNTEST
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Meter.svg"
@@ -317,6 +593,7 @@ proxy-groups:
     proxies:
       - 🇨🇳 大陆
 
+# 规则锚点
 rule-anchor:
   Local: &Local
     {type: file, behavior: classical, format: text}
