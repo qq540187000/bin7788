@@ -31,9 +31,9 @@ external-controller-cors:
     - "*"
   allow-private-network: true
 
-# 代理集合 (已展开所有引用)
+# 代理集合
 proxy-providers:
-  机场1:
+  机场:
     type: http
     interval: 86400
     health-check:
@@ -46,10 +46,10 @@ proxy-providers:
         - "clash.meta"
         - "mihomo"
     override:
-          additional-prefix: "机场1"
+          additional-prefix: "机场"
     # ⚠️⚠️⚠️ 请在下方填入你的真实订阅链接 ⚠️⚠️⚠️
     url: "https://ghproxy.net/https://raw.githubusercontent.com/qq540187000/bin7788/main/node.txt" 
-    path: ./proxy_providers/机场1.yaml
+    path: ./proxy_providers/机场.yaml
 
 profile:
   store-selected: true
@@ -117,7 +117,7 @@ proxies:
     - {name: ⛔️ 拒绝连接, type: reject}
     - {name: 🌐 DNS_Hijack, type: dns}
 
-# 策略组 (已移除所有锚点引用，防止报错)
+# 策略组
 proxy-groups:
   - name: 总模式
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/All.svg"
@@ -141,86 +141,6 @@ proxy-groups:
       - 🇨🇳 大陆
       - 总模式
 
-  - name: 小红书
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/XiaoHongShu.svg"
-    type: select
-    proxies:
-      - 🇨🇳 大陆
-      - ⛔️ 拒绝连接
-      - 总模式
-      - 延迟最低
-      - 故障转移
-      - 负载均衡
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-      - 其它地区
-    use:
-      - 机场1
-    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
-
-  - name: 抖音
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/DouYin.svg"
-    type: select
-    proxies:
-      - 🇨🇳 大陆
-      - ⛔️ 拒绝连接
-      - 总模式
-      - 延迟最低
-      - 故障转移
-      - 负载均衡
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-      - 其它地区
-    use:
-      - 机场1
-    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
-
-  - name: BiliBili
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/BiliBili.svg"
-    type: select
-    proxies:
-      - 🇨🇳 大陆
-      - ⛔️ 拒绝连接
-      - 总模式
-      - 延迟最低
-      - 故障转移
-      - 负载均衡
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-      - 其它地区
-    use:
-      - 机场1
-    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
-
-  - name: Steam
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Steam.svg"
-    type: select
-    proxies:
-      - 🇨🇳 大陆
-      - ⛔️ 拒绝连接
-      - 总模式
-      - 延迟最低
-      - 故障转移
-      - 负载均衡
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-      - 其它地区
-    use:
-      - 机场1
-    filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
-
   - name: Apple
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Apple.svg"
     type: select
@@ -238,7 +158,7 @@ proxy-groups:
       - 美国节点
       - 其它地区
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Microsoft
@@ -258,7 +178,7 @@ proxy-groups:
       - 美国节点
       - 其它地区
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Telegram
@@ -278,7 +198,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Spotify
@@ -298,7 +218,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: TikTok
@@ -318,7 +238,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: YouTube
@@ -338,7 +258,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Google
@@ -358,7 +278,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: GoogleFCM
@@ -378,7 +298,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Facebook
@@ -398,7 +318,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: OpenAI
@@ -418,7 +338,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: GitHub
@@ -438,7 +358,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: Twitter(X)
@@ -458,7 +378,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: DNS连接
@@ -478,7 +398,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 漏网之鱼
@@ -498,7 +418,7 @@ proxy-groups:
       - 其它地区
       - 🇨🇳 大陆
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 白名单出站
@@ -518,21 +438,21 @@ proxy-groups:
       - 美国节点
       - 其它地区
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 延迟最低
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Return.svg"
     type: url-test
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 故障转移
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Return.svg"
     type: fallback
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 负载均衡
@@ -540,7 +460,7 @@ proxy-groups:
     type: load-balance
     strategy: round-robin
     use:
-      - 机场1
+      - 机场
     filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
 
   - name: 台湾节点
@@ -548,42 +468,42 @@ proxy-groups:
     filter: "^(?=.*(台|新北|彰化|TW|Taiwan)).*$"
     type: url-test
     use:
-      - 机场1
+      - 机场
 
   - name: 香港节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/HK.svg"
     filter: "^(?=.*(港|HK|hk|Hong Kong|HongKong|hongkong)).*$"
     type: url-test
     use:
-      - 机场1
+      - 机场
 
   - name: 日本节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/JP.svg"
     filter: "^(?=.*(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan)).*$"
     type: url-test
     use:
-      - 机场1
+      - 机场
 
   - name: 美国节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/US.svg"
     filter: "^(?=.*(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)).*$"
     type: url-test
     use:
-      - 机场1
+      - 机场
 
   - name: 新加坡节点
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Singapore.svg"
     filter: "^(?=.*(新加坡|坡|狮城|SG|Singapore)).*$"
     type: url-test
     use:
-      - 机场1
+      - 机场
 
   - name: 其它地区
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Globe.svg"
     filter: "^(?!.*(港|HK|hk|Hong Kong|HongKong|hongkong|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|台|新北|彰化|TW|Taiwan|新加坡|坡|狮城|SG|Singapore|灾|网易|Netease|套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网)).*$"
     type: url-test
     use:
-      - 机场1
+      - 机场
     
   - name: CNTEST
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Meter.svg"
@@ -593,7 +513,7 @@ proxy-groups:
     proxies:
       - 🇨🇳 大陆
 
-# 规则源 (已移除所有锚点引用)
+# 规则源
 rule-providers:
   自定义出站:
     type: file
@@ -631,45 +551,6 @@ rule-providers:
     interval: 86400
     path: ./rules/No-ads-all.mrs
     url: "https://anti-ad.net/mihomo.mrs"
-
-  XiaoHongShu_域:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    path: ./rules/XiaoHongShu.mrs
-    url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/XiaoHongShu/XiaoHongShu_OCD_Domain.mrs"
-
-  DouYin_域:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    path: ./rules/DouYin.mrs
-    url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/DouYin/DouYin_OCD_Domain.mrs"
-
-  BiliBili_域:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    path: ./rules/BiliBili.mrs
-    url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/BiliBili/BiliBili_OCD_Domain.mrs"
-  BiliBili_IP:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    interval: 86400
-    path: ./rules/BiliBili_IP.mrs
-    url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/BiliBili/BiliBili_OCD_IP.mrs"
-
-  Steam_域:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    path: ./rules/Steam.mrs
-    url: "https://cdn.jsdelivr.net/gh/GitMetaio/rule@master/rule/Clash/Steam/Steam_OCD_Domain.mrs"
 
   TikTok_域:
     type: http
@@ -851,13 +732,6 @@ rules:
 
   - RULE-SET,自定义出站,白名单出站
 
-  - RULE-SET,DouYin_域,抖音
-  - RULE-SET,XiaoHongShu_域,小红书
-  
-  - RULE-SET,BiliBili_域,BiliBili
-  - RULE-SET,BiliBili_IP,BiliBili
-
-  - RULE-SET,Steam_域,Steam
   - RULE-SET,GitHub_域,GitHub
   - RULE-SET,TikTok_域,TikTok
 
