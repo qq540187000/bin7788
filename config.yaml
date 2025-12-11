@@ -734,6 +734,13 @@ rules:
 
   - RULE-SET,GitHub_域,GitHub
   - RULE-SET,TikTok_域,TikTok
+  
+# 强制让 tiktok 关键词走 TikTok 代理组
+  - DOMAIN-KEYWORD,tiktok,TikTok
+  - DOMAIN-SUFFIX,tiktokcdn.com,TikTok
+  - DOMAIN-SUFFIX,p16-tiktokcdn-com.akamaized.net,TikTok
+  - DOMAIN-SUFFIX,byteoversea.com,TikTok
+  - DOMAIN-SUFFIX,ibytedtos.com,TikTok
 
   - RULE-SET,Twitter_域,Twitter(X)
   - RULE-SET,Twitter_IP,Twitter(X)
